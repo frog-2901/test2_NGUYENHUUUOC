@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Shop - Cửa hàng trực tuyến</title>
+    <link rel="stylesheet" href="mini.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-shopping-bag"></i>
+                <h1>Mini Shop</h1>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link">Trang chủ</a>
+                <a href="#products" class="nav-link">Sản phẩm</a>
+                <button class="cart-toggle" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-text">Giỏ hàng</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Chào mừng đến với Mini Shop</h2>
+                <p class="hero-subtitle">Khám phá những sản phẩm tuyệt vời với giá cả hợp lý</p>
+                <button class="cta-btn" onclick="scrollToProducts()">
+                    <span>Mua sắm ngay</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sản phẩm nổi bật</h2>
+                <p class="section-subtitle">Những sản phẩm chất lượng cao được lựa chọn kỹ càng</p>
+            </div>
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Giỏ hàng của bạn</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-content">
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            <div class="cart-empty" id="cart-empty">
+                <div class="empty-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h4>Giỏ hàng trống</h4>
+                <p>Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span>Tổng cộng:</span>
+                    <span class="total-amount" id="cart-total">0đ</span>
+                </div>
+            </div>
+            <button class="checkout-btn" onclick="showCheckoutForm()" id="checkout-btn" disabled>
+                <i class="fas fa-credit-card"></i>
+                <span>Thanh toán</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-backdrop" onclick="closeCheckoutModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Thông tin thanh toán</h3>
+                <button class="close-modal" onclick="closeCheckoutModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="checkout-form" class="checkout-form">
+                    <div class="form-section">
+                        <h4>Thông tin khách hàng</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-name">Họ và tên *</label>
+                                <input type="text" id="customer-name" name="customerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-phone">Số điện thoại *</label>
+                                <input type="tel" id="customer-phone" name="customerPhone" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-email">Email *</label>
+                            <input type="email" id="customer-email" name="customerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-address">Địa chỉ giao hàng *</label>
+                            <textarea id="customer-address" name="customerAddress" rows="3" required placeholder="Nhập địa chỉ chi tiết..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Phương thức thanh toán</h4>
+                        <div class="payment-methods">
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="cod" required>
+                                <div class="payment-card">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <div class="payment-info">
+                                        <span class="payment-name">Thanh toán khi nhận hàng</span>
+                                        <span class="payment-desc">COD - Thanh toán bằng tiền mặt</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="bank" required>
+                                <div class="payment-card">
+                                    <i class="fas fa-university"></i>
+                                    <div class="payment-info">
+                                        <span class="payment-name">Chuyển khoản ngân hàng</span>
+                                        <span class="payment-desc">Chuyển khoản qua ATM/Internet Banking</span>
+                                    </div>
+                                </div>
+                            </label>
+                        
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Tóm tắt đơn hàng</h4>
+                        <div class="order-summary">
+                            <div class="order-items" id="order-items">
+                                <!-- Order items will be dynamically loaded here -->
+                            </div>
+                            <div class="order-total">
+                                <div class="total-row">
+                                    <span>Tạm tính:</span>
+                                    <span id="order-subtotal">0đ</span>
+                                </div>
+                                <div class="total-row">
+                                    <span>Phí vận chuyển:</span>
+                                    <span>Miễn phí</span>
+                                </div>
+                                <div class="total-row final-total">
+                                    <span>Tổng cộng:</span>
+                                    <span id="order-total">0đ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeCheckoutModal()">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Quay lại</span>
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-check"></i>
+                            <span>Xác nhận đặt hàng</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-backdrop" onclick="closeSuccessModal()"></div>
+        <div class="modal-content success-modal">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Đặt hàng thành công!</h3>
+                <p>Cảm ơn bạn đã mua hàng. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+                <div class="success-actions">
+                    <button class="btn-primary" onclick="closeSuccessModal()">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Tiếp tục mua sắm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Đang xử lý đơn hàng...</p>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- JavaScript -->
+    <script src="mini.js"></script>
+</body>
+</html>
