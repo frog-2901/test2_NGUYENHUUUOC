@@ -6,6 +6,6 @@ export class CustomerController {
   constructor(private readonly customerService: CustomerService) {
     }
     public async getAllCustomers(){
-      return "all customers"
+      return "all customers s wwf"
     }
 }
