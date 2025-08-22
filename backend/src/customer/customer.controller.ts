@@ -3,5 +3,9 @@ import { CustomerService } from './customer.service';
 
 @Controller('customer')
 export class CustomerController {
-  constructor(private readonly customerService: CustomerService) {}
+  constructor(private readonly customerService: CustomerService) {
+    }
+    public async getAllCustomers(){
+      return "all customers"
+    }
 }
